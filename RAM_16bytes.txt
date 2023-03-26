@@ -1,0 +1,35 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.numeric_std.all;
+entity RAM_16bytes is
+    Port ( Address : in STD_LOGIC_VECTOR (7 downto 0); -- provide the address location first 
+           data : in STD_LOGIC_VECTOR (7 downto 0); -- enter data 
+           Q : out STD_LOGIC_VECTOR (7 downto 0);-- RAM output 
+           write_enable : in STD_LOGIC; -- enable this to write into memeory 
+           read_enable: in std_logic);  -- enable this to read into memory
+end RAM_16bytes;
+
+architecture Behavioral of RAM_16bytes is
+-- RAM has a memory of 16 X 8 bits , that is 16bytes storage
+type RAM_memory is array (0 to 15) of std_logic_vector( 7 downto 0);
+
+signal RAM : RAm_memory := ( 
+    x"00", x"00" , x"ff" , x"00",    -- location x"00" to x"03"
+    x"00" ,x"00" , x"00" , x"00",    -- location x"04" to x"07"
+    x"00" ,x"00" , x"00" , x"00",    -- location x"08" to x"0B"
+    x"00" ,x"00" , x"00" , x"00"     -- location x"0C" to x"0F"
+);
+
+begin
+
+process(write_enable)
+begin 
+    if write_enable = '1' then 
+       RAM( to_integer(unsigned(address))) <= data; -- To write into The memory at a given memory location
+     end if;
+    if read_enable = '1' then 
+        q <= RAM( to_integer(unsigned(address))); -- To read from the memory with a given address
+    end if;
+end process;
+
+end Behavioral;
