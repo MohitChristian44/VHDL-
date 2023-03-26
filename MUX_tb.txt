@@ -1,0 +1,43 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity MUX_TB is
+--  Port ( );
+end MUX_TB;
+
+architecture Behavioral of MUX_TB is
+component MUX is
+    -- The four 4 bits  inputs are decleared below 
+    Port ( s0 : in STD_LOGIC_VECTOR (3 downto 0);
+           s1 : in STD_LOGIC_VECTOR (3 downto 0);
+           s2 : in STD_LOGIC_VECTOR (3 downto 0);
+           s3 : in STD_LOGIC_VECTOR (3 downto 0);
+           sel : in STD_LOGIC_VECTOR (1 downto 0);
+           q : out STD_LOGIC_VECTOR (3 downto 0));
+end component MUX;
+
+signal  s0_tb , s1_tb , s2_tb , s3_tb :std_logic_vector( 3 downto 0);-- All input signals 
+signal sel_tb : std_logic_vector(1 downto 0); -- The select signal 
+signal q_tb : std_logic_vector( 3 downto 0); -- Output signal
+
+begin
+
+-- The design under test 
+DUT: Mux port map( s0 => s0_tb , s1 => s1_tb , s2 => s2_tb , s3 => s3_tb , sel => sel_tb , q => q_tb);
+
+-- The concurent signal assignment 
+s0_tb <= "0110";
+s1_tb <= "1000";
+s2_tb <= "0100";
+s3_tb <= "0010";
+
+sel : process 
+begin 
+sel_tb <= "11" ; wait for 10ns;
+sel_tb <= "01" ; wait for 10ns;
+sel_tb <= "00"; wait for 10ns;
+sel_tb <= "10" ; wait for 10ns;
+end process sel;
+
+end Behavioral;
