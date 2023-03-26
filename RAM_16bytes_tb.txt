@@ -1,0 +1,33 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity RAM_tb is
+--  Port ( );
+end RAM_tb;
+
+architecture Behavioral of RAM_tb is
+component RAM_16bytes is
+    Port ( Address : in STD_LOGIC_VECTOR (7 downto 0); -- provide the address location first 
+           data : in STD_LOGIC_VECTOR (7 downto 0); -- enter data 
+           Q : out STD_LOGIC_VECTOR (7 downto 0);-- RAM output 
+           write_enable : in STD_LOGIC; -- enable this to write into memeory 
+           read_enable: in std_logic);  -- enable this to read into memory
+end component RAM_16bytes;
+
+signal Add_tb , data_tb , q_tb : std_logic_vector( 7 downto 0);
+signal w_e_tb , r_e_tb : std_logic;
+
+begin
+
+dut: RAM_16bytes port map ( address => Add_tb , data => data_tb, q => q_tb , write_enable => w_e_tb, read_enable => r_e_tb);
+
+
+simulation: process 
+begin 
+add_tb <= x"01";
+--data_tb <= x"0f";
+r_e_tb <= '1'; wait for 10ns;
+
+end process simulation;
+
+end Behavioral;
