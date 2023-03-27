@@ -1,0 +1,23 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+
+entity ROM is
+    Port ( address : in STD_LOGIC_vector(3 downto 0);
+            data : out std_logic_vector(6 downto 0));
+end ROM;
+
+architecture Behavioral of ROM is
+type mem is array ( 0 to 15) of std_logic_vector(6 downto 0);
+
+signal ROM_memory : mem := 
+(   "100000" , "1111001", "0100100", "0110000","0011001",
+    "0010010","0000010", "1111000","0000000", "0010000",
+    "0001000", "0000011", "1000110", "0100001", "0001110"
+);
+-- this memory has BCD data stored
+
+begin
+ data <= Rom_memory( to_integer(unsigned(address)));
+
+end Behavioral;

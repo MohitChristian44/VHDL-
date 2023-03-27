@@ -1,0 +1,21 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity BCD is
+    Port ( address : in STD_LOGIC_VECTOR (3 downto 0);
+           BCD : out STD_LOGIC_VECTOR (6 downto 0));
+end BCD;
+
+architecture Behavioral of BCD is
+
+signal temp : std_logic_vector( 6 downto 0);
+
+begin
+    -- Load ROM data into this file 
+    Rom_data : entity work.ROM
+    port map (address => address , data => temp);
+    -- Print send the data to BCD output.
+    BCD <= temp;
+    
+
+end Behavioral;
