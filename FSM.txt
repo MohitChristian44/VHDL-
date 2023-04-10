@@ -1,0 +1,46 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+
+entity car_window is
+    Port ( P : in STD_LOGIC;
+           op_CW : out STD_LOGIC;
+           op_CCW : out STD_LOGIC;
+           rst : in STD_LOGIC;
+           clk : in std_logic);
+end car_window;
+
+architecture Behavioral of car_window is
+type state is (win_close , win_open);
+signal cr_state : state;
+begin
+    process(rst,clk)
+    begin 
+    if rst = '1' then 
+        cr_state <= win_close;
+     elsif rising_edge(clk) then 
+        case cr_state is
+            when win_close =>   if  P = '1' then 
+                                    cr_state <= win_open;
+                                    op_cw <= '1';
+                                    op_ccw <= '0';
+                                else 
+                                    cr_state <= win_close;
+                                    op_cw <= '0';
+                                    op_ccw <= '0';
+                                 end if;
+            when win_open => if  P = '1' then 
+                                    cr_state <= win_close;
+                                    op_cw <= '0';
+                                    op_ccw <= '1';
+                                else 
+                                    cr_state <= win_open;
+                                    op_cw <= '0';
+                                    op_ccw <= '0';
+                                 end if; 
+                 when others => cr_state <= win_close ; op_cw <= '0' ; op_ccw <= '0';
+                 end case;
+      end if;
+    end process;
+
+end Behavioral;
